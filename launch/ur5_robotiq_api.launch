@@ -1,0 +1,29 @@
+<launch>
+    <arg name="ur5" default="true"/>
+    <arg name="sim" default="false"/>
+    <arg name="gui" default="false"/>
+    <arg name="limited" default="true"/>
+    <arg name="headless" default="true"/>
+    <arg name="robotiq" default="false"/>
+    <arg name="rviz" default="true"/>
+    <arg name="robot_ip" default="128.197.136.232"/>
+    
+    <!-- <node name="robotiq_2f_gripper_driver" pkg="robotiq_2f_gripper_control" type="Robotiq2FGripperRtuNode.py" respawn="false" output="screen" args="/dev/ttyUSB0"/> -->
+
+    <!-- UR5 moveit setup http://wiki.ros.org/universal_robot/Tutorials/Getting%20Started%20with%20a%20Universal%20Robot%20and%20ROS-Industrial -->
+    <include file="$(find ur_modern_driver)/launch/ur5_bringup.launch">
+      <arg name="robot_ip" value="$(arg robot_ip)"/>
+      <arg name="limited" value="true"/>
+    </include>
+    
+    
+    <include file="$(find ur5_moveit_config)/launch/ur5_moveit_planning_execution.launch">
+      <arg name="limited" value="true"/>
+      <arg name="sim" value="$(arg sim)"/>
+    </include>
+
+    <include file="$(find ur5_moveit_config)/launch/moveit_rviz.launch">
+      <arg name="config" value="true"/>
+    </include>
+
+</launch>

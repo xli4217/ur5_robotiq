@@ -1,0 +1,27 @@
+<launch>
+    <arg name="ur5" default="true"/>
+    <arg name="sim" default="true"/>
+    <arg name="gui" default="false"/>
+    <arg name="limited" default="true"/>
+    <arg name="headless" default="true"/>
+    <arg name="robotiq" default="false"/>
+    <arg name="rviz" default="true"/>
+    <arg name="robot_ip" default="128.197.136.232"/>
+    
+    <!-- <node name="robotiq_2f_gripper_driver" pkg="robotiq_2f_gripper_control" type="Robotiq2FGripperRtuNode.py" respawn="false" output="screen" args="/dev/ttyUSB0"/> -->
+    
+    <include file="$(find ur_gazebo)/launch/ur5.launch">
+      <arg name="limited" value="$(arg limited)"/>
+      <arg name="gui" value="$(arg gui)"/>
+    </include>
+    
+    <include file="$(find ur5_moveit_config)/launch/ur5_moveit_planning_execution.launch">
+      <arg name="limited" value="true"/>
+      <arg name="sim" value="$(arg sim)"/>
+    </include>
+
+    <include file="$(find ur5_moveit_config)/launch/moveit_rviz.launch">
+      <arg name="config" value="true"/>
+    </include>
+
+</launch>
